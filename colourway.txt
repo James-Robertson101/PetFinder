@@ -1,0 +1,4 @@
+Primary: Forest Green (#2C5F2D)
+Secondary: Moss (#97BC62)
+Accent: Earth Brown (#6B4226)
+Highlight: Goldenrod (#FFD700)
