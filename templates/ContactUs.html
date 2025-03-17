@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>PetCare Example</title>
+  <link href="style.css" rel="stylesheet" />
+
+  <!-- Claspo Widget API -->
+  <script>
+    !function (t, e, c, n) {
+      var s = e.createElement(c);
+      s.async = 1, s.src = 'https://scripts.claspo.io/scripts/' + n + '.js';
+      var r = e.scripts[0];
+      r.parentNode.insertBefore(s, r);
+      var f = function () {
+        f.c(arguments);
+      };
+      f.q = [];
+      f.c = function () {
+        f.q.push(arguments);
+      };
+      t['claspo'] = t['claspo'] || f;
+    }(window, document, 'script', '9A20EFE8BBF540D99A16BC79300D275E');
+
+    document.addEventListener("DOMContentLoaded", function () {
+      console.log("Claspo script loaded, trying to initialize...");
+      claspo('init');
+    });
+  </script>
+
+  <style>
+    body {
+      background-color: #2C5F2D;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Navbar Styling */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background-color: #97BC62;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+
+    .navbar img {
+      height: 40px;
+      width: auto;
+    }
+
+    /* Navigation Links Styling */
+    .navbar nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    .navbar nav a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      transition: color 0.3s ease;
+    }
+
+    .navbar nav a:hover {
+      color: #2C5F2D;
+    }
+
+    /* Login/Signup Button Styling */
+    .login-signup {
+      background-color: #ffffff;
+      color: #2C5F2D;
+      font-weight: bold;
+      padding: 5px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .login-signup:hover {
+      background-color: #2C5F2D;
+      color: #ffffff;
+    }
+
+    /* Content Placeholder for Spacing */
+    .content {
+      padding: 60px 0px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      font-family: futura, Arial;
+    }
+
+    .jumbotron-background {
+      background-color: #6B4226;
+      height: 100px;
+    }
+
+    .jumbotron-background p {
+      text-align: center;
+      margin-top: 0;
+    }
+
+    .jumbotron {
+      text-align: center;
+      margin-bottom: 0;
+    }
+
+    .icon-navbar {
+      display: flex;
+      flex-direction: row;
+      position: relative;
+      padding: 10px;
+      background-color: #2C5F2D;
+    }
+
+    .left-side {
+      flex: 2;
+    }
+
+    .left-side p {
+      margin-top: 3px;
+      text-align: center;
+    }
+
+    .right-side {
+      display: flex;
+      flex: 1;
+      flex-direction: row;
+      justify-content: space-evenly;
+    }
+
+    .icon-background {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      width: 40px;
+      border-radius: 20px;
+      background-color: #97BC62;
+      transition: transform 0.2s ease-in-out;
+      cursor: pointer;
+    }
+
+    .icon-background:hover {
+      transform: scale(1.1);
+    }
+
+    .insta {
+      height: 20px;
+    }
+
+    .email {
+      height: 20px;
+      width: 30px;
+    }
+
+    .xlogo {
+      height: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar Section -->
+  <div class="navbar">
+    <a href="{{ url_for('home') }}">
+      <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="PetFinder"/>
+    </a>
+    <nav>
+      <a href="{{ url_for('find_a_pet') }}">Find a Pet</a>
+      <a href="{{ url_for('vets') }}">Vets</a>
+      <a href="{{ url_for('pet_advice') }}">Pet Advice</a>
+      <a href="{{ url_for('pet_sitters') }}">Pet Sitters</a>
+      <a href="{{ url_for('contact_us') }}">Contact Us</a>
+
+    </nav>
+    
+    <a href="{{ url_for('login') }}" style="text-decoration: none;">
+      <button class="login-signup">Login/Signup</button>
+    </a>
+
+  </div>
+
+  <!-- Main Content Section -->
+  <div class="content">
+    <div class="jumbotron-background">
+      <h1 class="jumbotron">Contact us</h1>
+      <p>We’d love to hear from you!</p>
+    </div>
+
+    <div class="icon-navbar">
+      <div class="left-side">
+        <p>Whether you have questions about our services, need advice for your furry friend, or just want to say
+          hello, we’re here to help!</p>
+      </div>
+
+      <div class="right-side">
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/PetFinderCare" target="_blank">
+          <div class="icon-background">
+            <img src="{{ url_for('static', filename='images/instagram-white.png') }}" alt="instagram" class ="insta">
+          </div>
+        </a>
+
+        <!-- Email (Claspo Popup) -->
+        <div class="icon-background" id="email-icon">
+          <img src="{{ url_for('static', filename='images/email-white-crop.png') }}" alt="email" class ="email">
+        </div>
+
+        <!-- Twitter/X -->
+        <a href="https://twitter.com/PetFinderCare" target="_blank">
+          <div class="icon-background">
+            <img src="{{ url_for('static', filename='images/xlogo.png') }}" alt="xlogo" class ="xlogo">
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript to Trigger Claspo Widget -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      console.log("DOM fully loaded, adding click event to Gmail icon...");
+
+      document.getElementById("email-icon").addEventListener("click", function () {
+        if (typeof claspo !== "undefined") {
+          console.log("Opening Claspo widget...");
+          claspo('showWidget', {formVariantId: 'f43892v43892'}); // Trigger Claspo popup
+        } else {
+          console.error("Claspo is not defined yet! Make sure the script is loaded.");
+        }
+      });
+    });
+  </script>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

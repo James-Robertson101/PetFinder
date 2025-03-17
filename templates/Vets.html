@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>PetCare Example</title>
+  <link href="style.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #2C5F2D;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Navbar Styling */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background-color: #97BC62;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between; /* Space out logo, links, and button */
+      padding: 0 20px;
+    }
+
+    .navbar img {
+      height: 40px; /* Adjust logo height */
+      width: auto; /* Keep aspect ratio */
+    }
+
+    /* Navigation Links Styling */
+    .navbar nav {
+      display: flex;
+      gap: 20px; /* Add space between links */
+    }
+
+    .navbar nav a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      transition: color 0.3s ease;
+    }
+
+    .navbar nav a:hover {
+      color: #2C5F2D; /* Hover effect */
+    }
+
+    /* Login/Signup Button Styling */
+    .login-signup {
+      background-color: #ffffff;
+      color: #2C5F2D;
+      font-weight: bold;
+      padding: 5px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .login-signup:hover {
+      background-color: #2C5F2D;
+      color: #ffffff;
+    }
+
+    /* Content Placeholder for Spacing */
+    .content {
+      padding: 80px 20px; /* Add padding to prevent content overlap with navbar */
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar Section -->
+  <div class="navbar">
+    <a href="{{ url_for('home') }}">
+      <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="PetFinder"/>
+    </a>
+    <nav>
+      <a href="{{ url_for('find_a_pet') }}">Find a Pet</a>
+      <a href="{{ url_for('vets') }}">Vets</a>
+      <a href="{{ url_for('pet_advice') }}">Pet Advice</a>
+      <a href="{{ url_for('pet_sitters') }}">Pet Sitters</a>
+      <a href="{{ url_for('contact_us') }}">Contact Us</a>
+
+    </nav>
+    <a href="{{ url_for('login') }}" style="text-decoration: none;">
+      <button class="login-signup">Login/Signup</button>
+    </a>
+  </div>
+
+  <!-- Main Content Section -->
+  <div class="content">
+    <h1>Welcome to PetCare</h1>
+    <p>
+      This is an example of a project with a logo, navigation bar, and login/signup button.
+      Customize it as needed!
+    </p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

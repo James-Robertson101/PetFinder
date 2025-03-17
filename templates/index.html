@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Name,Breed,Location,Details,Image URL,Profile Link-->
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>PetCare - Find Your Perfect Pet Companion</title>
+  <link href="style.css" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #2C5F2D;
+      color: white;
+    }
+
+    /* Navbar Styling */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background-color: #97BC62;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+
+    .navbar img {
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .navbar nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    .navbar nav a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      transition: color 0.3s ease;
+    }
+
+    .navbar nav a:hover {
+      color: #2C5F2D;
+    }
+
+    .login-signup {
+      background-color: #ffffff;
+      color: #2C5F2D;
+      font-weight: bold;
+      padding: 5px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .login-signup:hover {
+      background-color: #2C5F2D;
+      color: #ffffff;
+    }
+
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      background: url('hero-image.jpg') no-repeat center center/cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .hero h1 {
+      font-size: 50px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 20px;
+      margin-bottom: 30px;
+    }
+
+    .hero button {
+      background-color: #97BC62;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .hero button:hover {
+      background-color: #88A047;
+    }
+
+    /* Down Arrow Styling */
+    .scroll-arrow {
+      margin-top: 20px;
+      font-size: 24px;
+      color: white;
+      cursor: pointer;
+      animation: float 0.9s ease-in-out infinite;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(-20px);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    /* Featured Pets Section */
+    .featured-pets {
+      padding: 30px 20px;
+      text-align: center;
+      background-color: #97BC62;
+    }
+
+    .featured-pets h2 {
+      margin-bottom: 30px;
+      font-size: 28px;
+      color: white;
+    }
+
+    .pet-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .pet-card {
+      background: white;
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      color: #2C5F2D;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .pet-card img {
+      width: 95%;
+      height: 290px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .pet-card h3 {
+      margin: 10px 0 5px;
+    }
+
+    /* How It Works Section */
+    .how-it-works {
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .how-it-works h2 {
+      margin-bottom: 30px;
+      font-size: 28px;
+      color: white;
+    }
+
+    .steps {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .step {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 250px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .step img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .step h3 {
+      margin-bottom: 10px;
+      color: #2C5F2D;
+    }
+
+    .step p {
+      color: #555;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #2C5F2D;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .footer a {
+      color: #88A047;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <div class="navbar">
+    
+    <a href="{{ url_for('home') }}">
+      <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="PetFinder" />
+    </a>
+    <nav>
+      <a href="{{ url_for('find_a_pet') }}">Find a Pet</a>
+      <a href="{{ url_for('vets') }}">Vets</a>
+      <a href="{{ url_for('pet_advice') }}">Pet Advice</a>
+      <a href="{{ url_for('pet_sitters') }}">Pet Sitters</a>
+      <a href="{{ url_for('contact_us') }}">Contact Us</a>
+
+    </nav>
+    <a  href="{{ url_for('login') }}" style="text-decoration: none;">
+      <button class="login-signup">Login/Signup</button>
+    </a>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <h1>Find Your Perfect Pet Companion</h1>
+    <p>Discover pets waiting for a loving home near you.</p>
+    <button onclick="location.href='FindAPet.html'">Start Searching</button>
+    <!-- Down Arrow -->
+    <div class="scroll-arrow" onclick="scrollToFeaturedPets()">↓</div>
+  </div>
+
+  <!-- Featured Pets Section -->
+  <div class="featured-pets" id="featuredPets">
+    <h2>Featured Pets</h2>
+    <div class="pet-grid">
+      <div class="pet-card">
+        <img src="static/DogImage.png" alt="Dog">
+        <h3>Max</h3>
+        <p>2 Years Old • Golden Retriever</p>
+      </div>
+      <div class="pet-card">
+        <img src="static/CatImage.png" alt="Cat">
+        <h3>Whiskers</h3>
+        <p>1 Year Old • Persian Cat</p>
+      </div>
+      <div class="pet-card">
+        <img src="static/DogBella.png" alt="Dog">
+        <h3>Bella</h3>
+        <p>3 Years Old • Labrador</p>
+      </div>
+    </div>
+    <div class="scroll-arrow" onclick="scrollToHowItWorks()">↓</div>
+  </div>
+
+  <!-- How It Works Section -->
+  <div class="how-it-works" id="howItWorks">
+    <h2>How It Works</h2>
+    <div class="steps">
+      <div class="step">
+        <img src="static/PerfectSearchBox.png" alt="Search Icon">
+        <h3>Search</h3>
+        <p>Find pets based on location, breed, and age.</p>
+      </div>
+      <div class="step">
+        <img src="static/ConnectBox.png" alt="Connect Icon">
+        <h3>Connect</h3>
+        <p>Contact shelters or pet owners directly.</p>
+      </div>
+      <div class="step">
+        <img src="static/AdoptBox.png" alt="Adopt Icon">
+        <h3>Adopt</h3>
+        <p>Bring your new companion home!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>© 2025 PetCare. All Rights Reserved. | <a href="ContactUs.html">Contact Us</a></p>
+  </div>
+
+  <script>
+    function scrollToFeaturedPets() {
+      document.getElementById("featuredPets").scrollIntoView({behavior: "smooth"});
+    }
+
+    function scrollToHowItWorks() {
+      document.getElementById("howItWorks").scrollIntoView({behavior: "smooth"});
+    }
+  </script>
+</body>
+
+</html>
