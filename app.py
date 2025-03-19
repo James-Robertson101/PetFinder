@@ -117,5 +117,10 @@ def results():
 
     return jsonify(pets_json)
 
+@app.route('/locations', methods=['GET'])
+def get_locations():
+    locations = db.session.query(Pet.location).distinct().all()
+    locations_list = [loc[0] for loc in locations if loc[0] is not None]  # Ensure no None values
+    return jsonify({"locations": locations_list})
 if __name__ == '__main__':
     app.run(debug=True)

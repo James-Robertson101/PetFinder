@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 import datetime
+
 def scrape_dogs():
     """
     Scrapes all dog listings from Dog's Trust website.
@@ -96,7 +97,7 @@ def scrape_dogs():
                     profile_link = "N/A"
 
                 dogs.append({
-                    "animal": "dog",
+                    "animal": "Dog",
                     "name": name,
                     "breed": breed,
                     "location": location,
@@ -121,4 +122,6 @@ def scrape_dogs():
     finally:
         driver.quit()  # Ensure the driver closes properly
 
+
+    print("Dog data saved successfully.")
     return dogs

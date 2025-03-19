@@ -158,7 +158,7 @@
       background-color: #2C5F2D;
       color: #ffffff;
     }
-    
+
   </style>
 </head>
 <body>
@@ -187,19 +187,21 @@
 
     <!-- Search Form -->
     <div class="search-container">
-      <label for="postcode">Postcode:</label>
-      <input type="text" id="postcode" placeholder="Enter postcode (e.g., NY1)" required>
-  
-      <label for="distance">Distance (miles):</label>
-      <select id="distance">
-          <option value="10">10 miles</option>
-          <option value="20">20 miles</option>
-          <option value="30">30 miles</option>
-          <option value="50">50 miles</option>
-          <option value="100">100 miles</option>
-          <option value="150">150 miles</option>
+      <label for="animal">Select an Animal:</label>
+      <select id="animal" onchange="updateLocations()">
+          <option value="" disabled selected>Choose an animal</option>
+          <option value="dogs">Dogs</option>
+          <option value="cats">Cats</option>
+          <option value="rabbits">Rabbits</option>
+          <option value="horses">Horses</option>
       </select>
-  
+
+      <label for="location">Select a Location:</label>
+      <select id="location" name="location">
+          <option value="" disabled selected>Choose a location</option>
+      </select>
+
+
       <button onclick="fetchPets()">Find Pets</button>
       <button onclick="updateScrape()">Update Scrape</button>
     </div>
@@ -279,6 +281,42 @@
         document.getElementById("results").innerHTML = "<p>Something went wrong. Please try again.</p>";
       }
     }
+  </script>
+
+
+
+  <script>
+      // Simulated static locations for now (replace with a backend call later)
+      const animalLocations = {
+          "dogs": [
+              "Kenilworth (West Midlands)", "Glasgow", "Salisbury (Wiltshire)", "Loughborough",
+              "Ilfracombe", "Shoreham (Sussex)", "Basildon (Essex)", "Merseyside (Liverpool)",
+              "Cardiff", "Harefield West London", "Leeds", "Snetterton (Norfolk)", "West Calder (Edinburgh)",
+              "Evesham (Worcestershire)", "Shrewsbury (Shropshire)", "Bridgend (Wales)", "Manchester",
+              "Newbury (Berkshire)", "Canterbury", "Darlington", "Ballymena (Northern Ireland)", "Dundee rehoming"
+          ],
+          "cats": ["London Cat Rescue", "Birmingham Cat Shelter", "Edinburgh Feline Haven"],
+          "rabbits": ["Hoppy Haven - Manchester", "Bunny Burrow - Leeds", "Carrot Patch - Glasgow"],
+          "horses": ["Equestrian Center - Oxford", "Stables at Nottingham", "Horse Rescue - Bristol"]
+      };
+
+      async function updateLocations() {
+          let animal = document.getElementById("animal").value;
+          let locationDropdown = document.getElementById("location");
+
+          // Clear previous options
+          locationDropdown.innerHTML = '<option value="" disabled selected>Choose a location</option>';
+
+          if (animalLocations[animal]) {
+              // Add the respective locations to the dropdown
+              animalLocations[animal].forEach(loc => {
+                  let option = document.createElement("option");
+                  option.value = loc;
+                  option.textContent = loc;
+                  locationDropdown.appendChild(option);
+              });
+          }
+      }
   </script>
 
 </body>
