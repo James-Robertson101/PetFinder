@@ -97,15 +97,14 @@ def scrape_dogs():
                     profile_link = "N/A"
 
                 dogs.append({
-                    "animal": "Dog",
+                    "animal": "Dog",  # Use 'animal' instead of 'type' if required
                     "name": name,
                     "breed": breed,
                     "location": location,
                     "details": details,
-                    "image": img_src,
-                    "profile": profile_link
-                })
-
+                    "image_url": img_src,  # Change 'image' to 'image_url'
+                    "profile_url": profile_link  # Change 'profile' to 'profile_url'
+                    })
             # Try to find and click the "Next" button
             try:
                 next_button = WebDriverWait(driver, 5).until(

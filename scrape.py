@@ -144,3 +144,12 @@ def scrape_cats(base_url):
 
     return all_cats
 
+# Example usage
+if __name__ == "__main__":
+    base_url = "https://www.pets4homes.co.uk/adoption/cats/"
+    cats_data = scrape_cats(base_url)
+    print(f"Scraped {len(cats_data)} cat listings.")
+    for cat in cats_data:
+        print(cat)
+
+    driver.quit()  # Close the browser

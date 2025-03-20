@@ -3,6 +3,8 @@ from DogsTrust import scrape_dogs
 import threading
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import inspect
+from CatScraper import scrape_cats
+
 
 app = Flask(__name__)
 
@@ -13,13 +15,13 @@ db = SQLAlchemy(app)
 
 class Pet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    type = db.Column(db.String(80), nullable=False)
+    type = db.Column(db.String(80), nullable=False)  # Ensure this matches the key in the dictionary
     name = db.Column(db.String(80), nullable=False)
     breed = db.Column(db.String(80))
     location = db.Column(db.String(80))
     details = db.Column(db.Text)
-    image_url = db.Column(db.String(200))
-    profile_url = db.Column(db.String(200), unique=True)
+    image_url = db.Column(db.String(200))  # Ensure this matches the key in the dictionary
+    profile_url = db.Column(db.String(200), unique=True)  # Ensure this matches the key in the dictionary
 
 # Create tables (run this once)
 with app.app_context():
@@ -64,31 +66,38 @@ def scrape():
         # Push the application context
         with app.app_context():
             try:
-                # Scrape the data
-                scraped_data = scrape_dogs()
+                # Scrape dog data
+                scraped_dogs = scrape_dogs()
+                
+                # Scrape cat data
+                scraped_cats = scrape_cats("https://www.pets4homes.co.uk/adoption/cats/")  # Provide the appropriate URL
+                print("Scraped Dogs:", scraped_dogs)
+                print("Scraped Cats:", scraped_cats)
+                # Combine both dogs and cats data
+                all_scraped_data = scraped_dogs + scraped_cats
 
                 # Insert or update data in the database
-                for dog in scraped_data:
-                    existing_pet = Pet.query.filter_by(profile_url=dog['profile']).first()
+                for pet in all_scraped_data:
+                    existing_pet = Pet.query.filter_by(profile_url=pet['profile_url']).first()
                     if not existing_pet:
                         # Insert new pet
                         new_pet = Pet(
-                            type=dog.get('type', 'Dog'),  # Default to 'Dog' if type is not provided
-                            name=dog['name'],
-                            breed=dog['breed'],
-                            location=dog['location'],
-                            details=dog['details'],
-                            image_url=dog['image'],
-                            profile_url=dog['profile']
+                            type=pet.get('type', 'Dog'),  # Default to 'Dog' if type is not provided
+                            name=pet['name'],
+                            breed=pet['breed'],
+                            location=pet['location'],
+                            details=pet['details'],
+                            image_url=pet['image_url'],
+                            profile_url=pet['profile_url']
                         )
                         db.session.add(new_pet)
                     else:
                         # Update existing pet (if needed)
-                        existing_pet.name = dog['name']
-                        existing_pet.breed = dog['breed']
-                        existing_pet.location = dog['location']
-                        existing_pet.details = dog['details']
-                        existing_pet.image_url = dog['image']
+                        existing_pet.name = pet['name']
+                        existing_pet.breed = pet['breed']
+                        existing_pet.location = pet['location']
+                        existing_pet.details = pet['details']
+                        existing_pet.image_url = pet['image_url']
                 
                 # Commit changes to the database
                 db.session.commit()
