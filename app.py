@@ -110,7 +110,7 @@ def scrape():
     thread = threading.Thread(target=run_scraper)
     thread.start()
 
-    return "Scraping started. Please wait..."
+    return "Scraping started. Please wait... (note: depending on Wifi speed this could take up to 5 minutes)"
 @app.route('/results', methods=['GET'])
 def results():
     # Get the animal type and location from query parameters
