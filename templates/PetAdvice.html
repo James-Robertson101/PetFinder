@@ -4,13 +4,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>PetCare Example</title>
-  <link href="style.css" rel="stylesheet" />
+  <title>Pet Advice - PetCare</title>
   <style>
     body {
       background-color: #2C5F2D;
       margin: 0;
       font-family: Arial, sans-serif;
+      color: white;
     }
 
     /* Navbar Styling */
@@ -24,19 +24,18 @@
       z-index: 100;
       display: flex;
       align-items: center;
-      justify-content: space-between; /* Space out logo, links, and button */
+      justify-content: space-between;
       padding: 0 20px;
     }
 
     .navbar img {
-      height: 40px; /* Adjust logo height */
-      width: auto; /* Keep aspect ratio */
+      height: 40px;
+      width: auto;
     }
 
-    /* Navigation Links Styling */
     .navbar nav {
       display: flex;
-      gap: 20px; /* Add space between links */
+      gap: 20px;
     }
 
     .navbar nav a {
@@ -48,10 +47,9 @@
     }
 
     .navbar nav a:hover {
-      color: #2C5F2D; /* Hover effect */
+      color: #2C5F2D;
     }
 
-    /* Login/Signup Button Styling */
     .login-signup {
       background-color: #ffffff;
       color: #2C5F2D;
@@ -68,10 +66,81 @@
       color: #ffffff;
     }
 
-    /* Content Placeholder for Spacing */
+    /* Content Styling */
     .content {
-      padding: 80px 20px; /* Add padding to prevent content overlap with navbar */
-      color: white;
+      padding: 80px 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 36px;
+    }
+
+    .info-section {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .info-card {
+      background-color: #97BC62;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .info-card img {
+      width: 150px;
+      height: 150px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .info-card h2 {
+      margin: 0;
+      font-size: 24px;
+      color: #2C5F2D;
+    }
+
+    .info-card p {
+      margin: 10px 0 0;
+      line-height: 1.6;
+    }
+
+    .faq {
+      margin-top: 40px;
+    }
+
+    .faq h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+
+    .faq-item {
+      background-color: #97BC62;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .faq-item:hover {
+      background-color: #7FA052;
+    }
+
+    .faq-item h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .faq-item p {
+      margin: 10px 0 0;
+      display: none;
     }
   </style>
 </head>
@@ -80,7 +149,7 @@
   <!-- Navbar Section -->
   <div class="navbar">
     <a href="{{ url_for('home') }}">
-      <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="PetFinder"/>
+      <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="PetFinder" />
     </a>
     <nav>
       <a href="{{ url_for('find_a_pet') }}">Find a Pet</a>
@@ -88,7 +157,6 @@
       <a href="{{ url_for('pet_advice') }}">Pet Advice</a>
       <a href="{{ url_for('pet_sitters') }}">Pet Sitters</a>
       <a href="{{ url_for('contact_us') }}">Contact Us</a>
-
     </nav>
     <a href="{{ url_for('login') }}" style="text-decoration: none;">
       <button class="login-signup">Login/Signup</button>
@@ -97,14 +165,82 @@
 
   <!-- Main Content Section -->
   <div class="content">
-    <h1>Welcome to PetCare</h1>
-    <p>
-      This is an example of a project with a logo, navigation bar, and login/signup button.
-      Customize it as needed!
-    </p>
+    <h1>Pet Care Advice</h1>
+    <div class="info-section">
+      <!-- General Pet Care Tips -->
+      <div class="info-card">
+        <img src="{{ url_for('static', filename='images/care.jpg') }}" alt="Pet Care">
+        <div>
+          <h2>General Pet Care Tips</h2>
+          <p>
+            Taking care of a pet is a rewarding experience, but it also comes with responsibilities. Here are some general tips to keep your pet healthy and happy:
+          </p>
+          <ul>
+            <li>Feed your pet a balanced diet appropriate for their age, size, and breed.</li>
+            <li>Ensure your pet gets regular exercise to maintain a healthy weight and mental stimulation.</li>
+            <li>Regularly groom your pet to keep their coat, skin, and nails healthy.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Pet Safety Tips -->
+      <div class="info-card">
+        <img src="{{ url_for('static', filename='images/pet health.jpg') }}" alt="Pet Safety">
+        <div>
+          <h2>Pet Safety Tips</h2>
+          <p>
+            Keeping your pet safe is a top priority. Follow these safety tips:
+          </p>
+          <ul>
+            <li>Remove hazardous items like chemicals, small objects, and toxic plants.</li>
+            <li>Always use a leash when walking your dog to prevent accidents.</li>
+            <li>Ensure your pet has a microchip or ID tag in case they get lost.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Signs of a Healthy Pet -->
+      <div class="info-card">
+        <img src="{{ url_for('static', filename='images/Health pet.jpg') }}" alt="Healthy Pet">
+        <div>
+          <h2>Signs of a Healthy Pet</h2>
+          <p>
+            A healthy pet is a happy pet. Look for these signs of good health:
+          </p>
+          <ul>
+            <li>Bright, clear eyes</li>
+            <li>Clean ears and teeth</li>
+            <li>A shiny, well-groomed coat</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="faq">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item" onclick="toggleFAQ(this)">
+        <h3>How often should I groom my pet?</h3>
+        <p>It depends on the breed and coat type. Long-haired pets may need daily brushing, while short-haired pets can be groomed weekly.</p>
+      </div>
+      <div class="faq-item" onclick="toggleFAQ(this)">
+        <h3>What should I do if my pet stops eating?</h3>
+        <p>Monitor your pet closely. If they refuse food for more than 24 hours, consult your veterinarian.</p>
+      </div>
+      <div class="faq-item" onclick="toggleFAQ(this)">
+        <h3>How can I help my pet adjust to a new home?</h3>
+        <p>Give your pet time to explore their new environment. Provide a comfortable space, familiar toys, and plenty of love and patience.</p>
+      </div>
+    </div>
   </div>
 
-  <script src="script.js"></script>
+  <!-- JavaScript for FAQ Toggle -->
+  <script>
+    function toggleFAQ(element) {
+      const content = element.querySelector('p');
+      content.style.display = content.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
 </body>
 
 </html>

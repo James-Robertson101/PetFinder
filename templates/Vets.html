@@ -4,13 +4,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>PetCare Example</title>
-  <link href="style.css" rel="stylesheet" />
+  <title>Veterinary Information - PetCare</title>
   <style>
     body {
       background-color: #2C5F2D;
       margin: 0;
       font-family: Arial, sans-serif;
+      color: white;
     }
 
     /* Navbar Styling */
@@ -24,19 +24,18 @@
       z-index: 100;
       display: flex;
       align-items: center;
-      justify-content: space-between; /* Space out logo, links, and button */
+      justify-content: space-between;
       padding: 0 20px;
     }
 
     .navbar img {
-      height: 40px; /* Adjust logo height */
-      width: auto; /* Keep aspect ratio */
+      height: 40px;
+      width: auto;
     }
 
-    /* Navigation Links Styling */
     .navbar nav {
       display: flex;
-      gap: 20px; /* Add space between links */
+      gap: 20px;
     }
 
     .navbar nav a {
@@ -48,10 +47,9 @@
     }
 
     .navbar nav a:hover {
-      color: #2C5F2D; /* Hover effect */
+      color: #2C5F2D;
     }
 
-    /* Login/Signup Button Styling */
     .login-signup {
       background-color: #ffffff;
       color: #2C5F2D;
@@ -68,10 +66,69 @@
       color: #ffffff;
     }
 
-    /* Content Placeholder for Spacing */
+    /* Content Styling */
     .content {
-      padding: 80px 20px; /* Add padding to prevent content overlap with navbar */
-      color: white;
+      padding: 80px 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .info-section {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .info-section h2 {
+      color: #97BC62;
+      margin-top: 30px;
+    }
+
+    .info-section p {
+      line-height: 1.6;
+    }
+
+    .info-section ul {
+      list-style-type: disc;
+      padding-left: 20px;
+    }
+
+    .info-section ul li {
+      margin-bottom: 10px;
+    }
+
+    .faq {
+      margin-top: 40px;
+    }
+
+    .faq h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .faq-item {
+      background-color: #97BC62;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .faq-item:hover {
+      background-color: #7FA052;
+    }
+
+    .faq-item h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .faq-item p {
+      margin: 10px 0 0;
+      display: none;
     }
   </style>
 </head>
@@ -80,7 +137,7 @@
   <!-- Navbar Section -->
   <div class="navbar">
     <a href="{{ url_for('home') }}">
-      <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="PetFinder"/>
+      <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="PetFinder" />
     </a>
     <nav>
       <a href="{{ url_for('find_a_pet') }}">Find a Pet</a>
@@ -88,7 +145,6 @@
       <a href="{{ url_for('pet_advice') }}">Pet Advice</a>
       <a href="{{ url_for('pet_sitters') }}">Pet Sitters</a>
       <a href="{{ url_for('contact_us') }}">Contact Us</a>
-
     </nav>
     <a href="{{ url_for('login') }}" style="text-decoration: none;">
       <button class="login-signup">Login/Signup</button>
@@ -97,14 +153,68 @@
 
   <!-- Main Content Section -->
   <div class="content">
-    <h1>Welcome to PetCare</h1>
-    <p>
-      This is an example of a project with a logo, navigation bar, and login/signup button.
-      Customize it as needed!
-    </p>
+    <h1>Veterinary Information for Pet Owners</h1>
+    <div class="info-section">
+      <h2>Why Regular Vet Visits Are Important</h2>
+      <p>
+        Regular veterinary checkups are essential for keeping your pet healthy and happy. Here’s why:
+      </p>
+      <ul>
+        <li><strong>Preventive Care:</strong> Regular visits help catch health issues early, before they become serious.</li>
+        <li><strong>Vaccinations:</strong> Keep your pet up-to-date on vaccines to protect against diseases.</li>
+        <li><strong>Dental Health:</strong> Vets can identify and treat dental problems that could lead to pain or infections.</li>
+        <li><strong>Nutritional Advice:</strong> Get expert guidance on the best diet for your pet’s age, breed, and health.</li>
+      </ul>
+
+      <h2>How to Choose the Right Vet</h2>
+      <p>
+        Finding the right veterinarian is crucial for your pet’s well-being. Consider the following:
+      </p>
+      <ul>
+        <li><strong>Location:</strong> Choose a vet clinic that’s convenient for you.</li>
+        <li><strong>Services Offered:</strong> Ensure the clinic provides the services your pet needs (e.g., surgery, dental care).</li>
+        <li><strong>Reviews:</strong> Check online reviews or ask for recommendations from other pet owners.</li>
+        <li><strong>Emergency Care:</strong> Find out if the clinic offers 24/7 emergency services.</li>
+      </ul>
+
+      <h2>Common Signs Your Pet Needs a Vet</h2>
+      <p>
+        Watch out for these signs that may indicate your pet needs medical attention:
+      </p>
+      <ul>
+        <li>Loss of appetite or weight</li>
+        <li>Lethargy or lack of energy</li>
+        <li>Vomiting or diarrhea</li>
+        <li>Difficulty breathing</li>
+        <li>Unusual lumps or bumps</li>
+      </ul>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="faq">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-item" onclick="toggleFAQ(this)">
+        <h3>How often should I take my pet to the vet?</h3>
+        <p>Healthy adult pets should have a checkup at least once a year. Senior pets or those with health issues may need more frequent visits.</p>
+      </div>
+      <div class="faq-item" onclick="toggleFAQ(this)">
+        <h3>What should I bring to my first vet visit?</h3>
+        <p>Bring any medical records, a list of current medications, and your pet’s vaccination history.</p>
+      </div>
+      <div class="faq-item" onclick="toggleFAQ(this)">
+        <h3>How can I prepare my pet for a vet visit?</h3>
+        <p>Keep your pet calm by bringing their favorite toy or blanket. For cats, use a secure carrier. For dogs, ensure they’re on a leash.</p>
+      </div>
+    </div>
   </div>
 
-  <script src="script.js"></script>
+  <!-- JavaScript for FAQ Toggle -->
+  <script>
+    function toggleFAQ(element) {
+      const content = element.querySelector('p');
+      content.style.display = content.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
 </body>
 
 </html>
