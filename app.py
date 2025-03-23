@@ -113,15 +113,19 @@ def scrape():
     return "Scraping started. Please wait..."
 @app.route('/results', methods=['GET'])
 def results():
-    # Get the animal type from query parameters
+    # Get the animal type and location from query parameters
     animal = request.args.get('animal')
+    location = request.args.get('location')
 
     if not animal:
         return jsonify({"error": "Missing animal type"}), 400
 
     try:
         # Query the database for matching pets
-        pets = Pet.query.filter(Pet.type == animal).all()
+        query = Pet.query.filter(Pet.type == animal)
+        if location:
+            query = query.filter(Pet.location == location)
+        pets = query.all()
 
         # Convert the results to JSON
         pets_json = [{
