@@ -141,5 +141,14 @@ def get_locations():
     locations = db.session.query(Pet.location).distinct().all()
     locations_list = [loc[0] for loc in locations if loc[0] is not None]  # Ensure no None values
     return jsonify({"locations": locations_list})
+@app.route('/locations/<animal>', methods=['GET'])
+def get_locations_by_animal(animal):
+    try:
+        # Query the database for distinct locations for the selected animal
+        locations = db.session.query(Pet.location).filter(Pet.type == animal).distinct().all()
+        locations_list = [loc[0] for loc in locations if loc[0] is not None]  # Ensure no None values
+        return jsonify({"locations": locations_list})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 if __name__ == '__main__':
     app.run(debug=True)

@@ -288,36 +288,31 @@
 
   <script>
       // Simulated static locations for now (replace with a backend call later)
-      const animalLocations = {
-          "dogs": [
-              "Kenilworth (West Midlands)", "Glasgow", "Salisbury (Wiltshire)", "Loughborough",
-              "Ilfracombe", "Shoreham (Sussex)", "Basildon (Essex)", "Merseyside (Liverpool)",
-              "Cardiff", "Harefield West London", "Leeds", "Snetterton (Norfolk)", "West Calder (Edinburgh)",
-              "Evesham (Worcestershire)", "Shrewsbury (Shropshire)", "Bridgend (Wales)", "Manchester",
-              "Newbury (Berkshire)", "Canterbury", "Darlington", "Ballymena (Northern Ireland)", "Dundee rehoming"
-          ],
-          "cats": ["London Cat Rescue", "Birmingham Cat Shelter", "Edinburgh Feline Haven"],
-          "rabbits": ["Hoppy Haven - Manchester", "Bunny Burrow - Leeds", "Carrot Patch - Glasgow"],
-          "horses": ["Equestrian Center - Oxford", "Stables at Nottingham", "Horse Rescue - Bristol"]
-      };
-
       async function updateLocations() {
-          let animal = document.getElementById("animal").value;
-          let locationDropdown = document.getElementById("location");
+    let animal = document.getElementById("animal").value;
+    let locationDropdown = document.getElementById("location");
 
-          // Clear previous options
-          locationDropdown.innerHTML = '<option value="" disabled selected>Choose a location</option>';
+    // Clear previous options
+    locationDropdown.innerHTML = '<option value="" disabled selected>Choose a location</option>';
 
-          if (animalLocations[animal]) {
-              // Add the respective locations to the dropdown
-              animalLocations[animal].forEach(loc => {
-                  let option = document.createElement("option");
-                  option.value = loc;
-                  option.textContent = loc;
-                  locationDropdown.appendChild(option);
-              });
-          }
-      }
+    if (animal) {
+        try {
+            const response = await fetch(`/locations/${animal}`);
+            if (!response.ok) {
+                throw new Error(`Server error: ${response.status} ${response.statusText}`);
+            }
+            const data = await response.json();
+            data.locations.forEach(loc => {
+                let option = document.createElement("option");
+                option.value = loc;
+                option.textContent = loc;
+                locationDropdown.appendChild(option);
+            });
+        } catch (error) {
+            console.error("Error fetching locations:", error);
+        }
+    }
+}
   </script>
 
 </body>
