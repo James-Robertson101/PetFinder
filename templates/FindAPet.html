@@ -190,10 +190,8 @@
       <label for="animal">Select an Animal:</label>
       <select id="animal" onchange="updateLocations()">
           <option value="" disabled selected>Choose an animal</option>
-          <option value="dogs">Dogs</option>
-          <option value="cats">Cats</option>
-          <option value="rabbits">Rabbits</option>
-          <option value="horses">Horses</option>
+          <option value="Dog">Dog</option>
+          <option value="Cat">Cat</option>
       </select>
 
       <label for="location">Select a Location:</label>
@@ -215,6 +213,7 @@
   <script>
     // Function to trigger scraping
     async function updateScrape() {
+
       try {
         const response = await fetch('/scrape', {
           method: 'GET',
@@ -237,50 +236,52 @@
 
     // Function to fetch and display results
     async function fetchPets() {
-      try {
-        const response = await fetch('/results', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error(`Server error: ${response.status} ${response.statusText}`);
-        }
-
-        const data = await response.json();
-
-        // Clear previous results
-        document.getElementById("results").innerHTML = "";
-
-        if (!Array.isArray(data) || data.length === 0) {
-          document.getElementById("results").innerHTML = "<p>No pets found. Try expanding your search.</p>";
-          return;
-        }
-
-        // Generate results dynamically
-        data.forEach(pet => {
-          const petCard = document.createElement("div");
-          petCard.classList.add("pet-card");
-
-          petCard.innerHTML = `
-            <img src="${pet.image_url}" alt="${pet.name}">
-            <h3>${pet.name}</h3>
-            <p><strong>Breed:</strong> ${pet.breed}</p>
-            <p><strong>Location:</strong> ${pet.location}</p>
-            <p>${pet.details}</p>
-            <a href="${pet.profile_url}" target="_blank">View Profile</a>
-          `;
-
-          document.getElementById("results").appendChild(petCard);
-        });
-
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        document.getElementById("results").innerHTML = "<p>Something went wrong. Please try again.</p>";
-      }
+    const animalType = document.getElementById("animal").value;
+    
+    if (!animalType) {
+      alert("Please select an animal.");
+      return;
     }
+
+    try {
+      const response = await fetch(`/results?animal=${encodeURIComponent(animalType)}`);
+    
+
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.status} ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      const resultsContainer = document.getElementById("results");
+      resultsContainer.innerHTML = ""; // Clear previous results
+
+      if (!Array.isArray(data) || data.length === 0) {
+        resultsContainer.innerHTML = "<p>No pets found. Try expanding your search.</p>";
+        return;
+      }
+
+      data.forEach(pet => {
+        const petCard = document.createElement("div");
+        petCard.classList.add("pet-card");
+
+        petCard.innerHTML = `
+          <img src="${pet.image_url}" alt="${pet.name}">
+          <h3>${pet.name}</h3>
+          <p><strong>Breed:</strong> ${pet.breed}</p>
+          <p><strong>Location:</strong> ${pet.location}</p>
+          <p>${pet.details}</p>
+          <a href="${pet.profile_url}" target="_blank">View Profile</a>
+        `;
+
+        resultsContainer.appendChild(petCard);
+      });
+
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      document.getElementById("results").innerHTML = "<p>Something went wrong. Please try again.</p>";
+    }
+  }
+
   </script>
 
 

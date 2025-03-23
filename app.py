@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from DogsTrust import scrape_dogs
 import threading
 from flask_sqlalchemy import SQLAlchemy
@@ -113,19 +113,29 @@ def scrape():
     return "Scraping started. Please wait..."
 @app.route('/results', methods=['GET'])
 def results():
-    # Query the database for all pets
-    pets = Pet.query.all()
-    pets_json = [{
-        "name": pet.name,
-        "breed": pet.breed,
-        "location": pet.location,
-        "details": pet.details,
-        "image_url": pet.image_url,
-        "profile_url": pet.profile_url
-    } for pet in pets]
+    # Get the animal type from query parameters
+    animal = request.args.get('animal')
 
-    return jsonify(pets_json)
+    if not animal:
+        return jsonify({"error": "Missing animal type"}), 400
 
+    try:
+        # Query the database for matching pets
+        pets = Pet.query.filter(Pet.type == animal).all()
+
+        # Convert the results to JSON
+        pets_json = [{
+            "name": pet.name,
+            "breed": pet.breed,
+            "location": pet.location,
+            "details": pet.details,
+            "image_url": pet.image_url,
+            "profile_url": pet.profile_url
+        } for pet in pets]
+
+        return jsonify(pets_json)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 @app.route('/locations', methods=['GET'])
 def get_locations():
     locations = db.session.query(Pet.location).distinct().all()
