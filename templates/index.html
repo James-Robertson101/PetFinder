@@ -233,7 +233,7 @@
   <div class="hero">
     <h1>Find Your Perfect Pet Companion</h1>
     <p>Discover pets waiting for a loving home near you.</p>
-    <button onclick="location.href='FindAPet.html'">Start Searching</button>
+    <button id="startSearchingButton">Start Searching</button>
     <!-- Down Arrow -->
     <div class="scroll-arrow" onclick="scrollToFeaturedPets()">↓</div>
   </div>
@@ -268,10 +268,18 @@
 
   <!-- Footer -->
   <div class="footer">
-    <p>© 2025 PetCare. All Rights Reserved. | <a href="ContactUs.html">Contact Us</a></p>
+    <p>© 2025 PetCare. All Rights Reserved. | <a href="{{ url_for('contact_us') }}">Contact Us</a></p>
   </div>
 
   <script>
+    // Function to redirect to the "Find a Pet" page
+    function redirectToFindAPet() {
+      window.location.href = "{{ url_for('find_a_pet') }}";
+    }
+
+    // Add an event listener to the "Start Searching" button
+    document.getElementById('startSearchingButton').addEventListener('click', redirectToFindAPet);
+
     // Function to scroll to the Featured Pets section
     function scrollToFeaturedPets() {
       document.getElementById("featuredPets").scrollIntoView({ behavior: "smooth" });
