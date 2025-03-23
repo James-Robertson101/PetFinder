@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- Name,Breed,Location,Details,Image URL,Profile Link-->
 
 <head>
   <meta charset="utf-8">
@@ -8,6 +7,7 @@
   <title>PetCare - Find Your Perfect Pet Companion</title>
   <link href="style.css" rel="stylesheet" />
   <style>
+    /* Your existing CSS styles */
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -15,7 +15,6 @@
       color: white;
     }
 
-    /* Navbar Styling */
     .navbar {
       position: fixed;
       top: 0;
@@ -68,8 +67,6 @@
       color: #ffffff;
     }
 
-
-    /* Hero Section */
     .hero {
       height: 100vh;
       background: url('hero-image.jpg') no-repeat center center/cover;
@@ -106,7 +103,6 @@
       background-color: #88A047;
     }
 
-    /* Down Arrow Styling */
     .scroll-arrow {
       margin-top: 20px;
       font-size: 24px;
@@ -116,18 +112,14 @@
     }
 
     @keyframes float {
-
-      0%,
-      100% {
+      0%, 100% {
         transform: translateY(-20px);
       }
-
       50% {
         transform: translateY(-10px);
       }
     }
 
-    /* Featured Pets Section */
     .featured-pets {
       padding: 30px 20px;
       text-align: center;
@@ -166,7 +158,6 @@
       margin: 10px 0 5px;
     }
 
-    /* How It Works Section */
     .how-it-works {
       padding: 60px 20px;
       text-align: center;
@@ -210,7 +201,6 @@
       color: #555;
     }
 
-    /* Footer */
     .footer {
       background-color: #2C5F2D;
       color: white;
@@ -228,7 +218,6 @@
 <body>
   <!-- Navbar -->
   <div class="navbar">
-    
     <a href="{{ url_for('home') }}">
       <img src="{{ url_for('static', filename='images/Logo.png') }}" alt="PetFinder" />
     </a>
@@ -237,7 +226,6 @@
       <a href="{{ url_for('vets') }}">Vets</a>
       <a href="{{ url_for('pet_advice') }}">Pet Advice</a>
       <a href="{{ url_for('contact_us') }}">Contact Us</a>
-
     </nav>
   </div>
 
@@ -253,22 +241,8 @@
   <!-- Featured Pets Section -->
   <div class="featured-pets" id="featuredPets">
     <h2>Featured Pets</h2>
-    <div class="pet-grid">
-      <div class="pet-card">
-        <img src="static/DogImage.png" alt="Dog">
-        <h3>Max</h3>
-        <p>2 Years Old • Golden Retriever</p>
-      </div>
-      <div class="pet-card">
-        <img src="static/CatImage.png" alt="Cat">
-        <h3>Whiskers</h3>
-        <p>1 Year Old • Persian Cat</p>
-      </div>
-      <div class="pet-card">
-        <img src="static/DogBella.png" alt="Dog">
-        <h3>Bella</h3>
-        <p>3 Years Old • Labrador</p>
-      </div>
+    <div class="pet-grid" id="featuredPetsGrid">
+      <!-- Pet cards will be dynamically inserted here -->
     </div>
     <div class="scroll-arrow" onclick="scrollToHowItWorks()">↓</div>
   </div>
@@ -298,13 +272,49 @@
   </div>
 
   <script>
+    // Function to scroll to the Featured Pets section
     function scrollToFeaturedPets() {
-      document.getElementById("featuredPets").scrollIntoView({behavior: "smooth"});
+      document.getElementById("featuredPets").scrollIntoView({ behavior: "smooth" });
     }
 
+    // Function to scroll to the How It Works section
     function scrollToHowItWorks() {
-      document.getElementById("howItWorks").scrollIntoView({behavior: "smooth"});
+      document.getElementById("howItWorks").scrollIntoView({ behavior: "smooth" });
     }
+
+    // Function to fetch and display featured pets
+    async function loadFeaturedPets() {
+      try {
+        const response = await fetch('/featured-pets');
+        if (!response.ok) {
+          throw new Error(`Server error: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        const featuredPetsGrid = document.getElementById('featuredPetsGrid');
+        featuredPetsGrid.innerHTML = ''; // Clear existing content
+
+        data.forEach(pet => {
+          const petCard = document.createElement('div');
+          petCard.classList.add('pet-card');
+
+          petCard.innerHTML = `
+            <img src="${pet.image_url}" alt="${pet.name}">
+            <h3>${pet.name}</h3>
+            <p>${pet.breed} • ${pet.location}</p>
+            <a href="${pet.profile_url}" target="_blank">View Profile</a>
+          `;
+
+          featuredPetsGrid.appendChild(petCard);
+        });
+      } catch (error) {
+        console.error("Error fetching featured pets:", error);
+        document.getElementById('featuredPetsGrid').innerHTML = "<p>Something went wrong. Please try again.</p>";
+      }
+    }
+
+    // Load featured pets when the page loads
+    window.onload = loadFeaturedPets;
   </script>
 </body>
 

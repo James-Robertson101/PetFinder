@@ -154,5 +154,26 @@ def get_locations_by_animal(animal):
         return jsonify({"locations": locations_list})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+@app.route('/featured-pets', methods=['GET'])
+def featured_pets():
+    try:
+        # Fetch 2 random dogs and 1 random cat
+        dogs = Pet.query.filter(Pet.type == 'Dog').order_by(db.func.random()).limit(2).all()
+        cats = Pet.query.filter(Pet.type == 'Cat').order_by(db.func.random()).limit(1).all()
+        featured_pets = dogs + cats
+
+        # Convert the results to JSON
+        pets_json = [{
+            "name": pet.name,
+            "breed": pet.breed,
+            "location": pet.location,
+            "details": pet.details,
+            "image_url": pet.image_url,
+            "profile_url": pet.profile_url
+        } for pet in featured_pets]
+
+        return jsonify(pets_json)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 if __name__ == '__main__':
     app.run(debug=True)
